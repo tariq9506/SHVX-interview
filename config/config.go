@@ -45,30 +45,6 @@ func (dbConfig DBConfig) DbURL() string {
 		dbConfig.Host, dbConfig.Port, dbConfig.User, dbConfig.Password, dbConfig.DBName)
 }
 
-func openDB() {
-	var err error
-	DB, err = sql.Open("postgres", BuildDBConfig().DbURL())
-	if err != nil {
-		log.Println("db connect error")
-		log.Println("openDB: failed:", err)
-		return
-	}
-
-	err = DB.Ping()
-	if err != nil {
-		log.Println("openDB: failed:", err)
-		return
-	}
-}
-
-// GetDB get db object
-func GetDB() *sql.DB {
-	if DB == nil {
-		openDB()
-	}
-	return DB
-}
-
 // GetDB2 same as getDB but returns an error when it cannot connect.
 func GetDB2() (*sql.DB, error) {
 	DB, err := sql.Open("postgres", BuildDBConfig().DbURL())
